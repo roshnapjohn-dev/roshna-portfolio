@@ -5,381 +5,724 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roshna P John — PHP / Symfony Full Stack Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0A1520;
-    --panel:#101E30;
-    --panel2:#0D1A28;
-    --line:#213A54;
-    --blue:#6FB3F0;
-    --blue-dim:#3E6E96;
-    --amber:#E3A548;
-    --green:#7FC29B;
-    --text:#E7EDF3;
-    --muted:#8AA0B8;
-    --muted2:#5D7690;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:
-      linear-gradient(var(--bg),var(--bg)),
-      repeating-linear-gradient(0deg, rgba(111,179,240,0.045) 0px, rgba(111,179,240,0.045) 1px, transparent 1px, transparent 40px),
-      repeating-linear-gradient(90deg, rgba(111,179,240,0.045) 0px, rgba(111,179,240,0.045) 1px, transparent 1px, transparent 40px);
-    background-blend-mode:normal;
-    color:var(--text);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.6;
-    min-height:100vh;
-  }
-  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
-  h1,h2,h3{font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em;}
-  .mono{font-family:'IBM Plex Mono', monospace;}
-  a{color:var(--blue); text-decoration:none;}
+:root{
+  --bg:#1E1E2E;
+  --sidebar:#11111B;
+  --panel:#181825;
+  --panel2:#1E1E2E;
+  --line:#313244;
+  --line-soft:#292941;
+  --text:#CDD6F4;
+  --muted:#9399B2;
+  --muted2:#6C7086;
+  --purple:#CBA6F7;
+  --teal:#94E2D5;
+  --peach:#FAB387;
+  --red:#F38BA8;
+  --blue:#89B4FA;
+  --yellow:#F9E2AF;
+  --green:#A6E3A1;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'JetBrains Mono', monospace;
+  font-size:14px;
+  overflow-x:hidden;
+}
+.disp{font-family:'Space Grotesk', sans-serif;}
+::selection{background:var(--purple); color:#1E1E2E;}
+a{color:inherit; text-decoration:none;}
+::-webkit-scrollbar{width:10px; height:10px;}
+::-webkit-scrollbar-track{background:var(--panel);}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px;}
 
-  /* corner-bracket panel */
-  .panel{
-    position:relative;
-    background:linear-gradient(180deg, var(--panel), var(--panel2));
-    border:1px solid var(--line);
-    padding:32px;
-  }
-  .panel::before,.panel::after,.panel .c-tl,.panel .c-br{
-    content:''; position:absolute; width:14px; height:14px;
-    border-color:var(--blue-dim); border-style:solid; opacity:0.9;
-  }
-  .panel::before{ top:-1px; left:-1px; border-width:2px 0 0 2px; }
-  .panel::after{ bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
+/* ============ IDE SHELL ============ */
+.ide{display:flex; flex-direction:column; min-height:100vh;}
 
-  /* ---------- HEADER / NAV ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(10,21,32,0.88); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
-  .brand{font-family:'Space Grotesk'; font-weight:700; font-size:16px; letter-spacing:0.02em;}
-  .brand span{color:var(--blue);}
-  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--muted);}
-  .navlinks a{color:var(--muted); font-family:'IBM Plex Mono'; font-size:12.5px; letter-spacing:0.03em; text-transform:uppercase;}
-  .navlinks a:hover{color:var(--blue);}
-  .status-pill{
-    display:flex; align-items:center; gap:6px;
-    font-family:'IBM Plex Mono'; font-size:11px; color:var(--green);
-    border:1px solid rgba(127,194,155,0.35); background:rgba(127,194,155,0.08);
-    padding:4px 10px; border-radius:2px; letter-spacing:0.03em;
-  }
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--green); box-shadow:0 0 6px var(--green);}
+/* Titlebar */
+.titlebar{
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--sidebar); border-bottom:1px solid var(--line);
+  padding:10px 16px; position:sticky; top:0; z-index:100;
+}
+.tl-left{display:flex; align-items:center; gap:14px;}
+.dots{display:flex; gap:7px;}
+.dots span{width:11px; height:11px; border-radius:50%;}
+.dots span:nth-child(1){background:#F38BA8;}
+.dots span:nth-child(2){background:#F9E2AF;}
+.dots span:nth-child(3){background:#A6E3A1;}
+.tl-title{color:var(--muted); font-size:12.5px;}
+.tl-title b{color:var(--text); font-weight:500;}
+.tl-right{display:flex; align-items:center; gap:16px;}
+.menu-btn{
+  display:none; background:none; border:1px solid var(--line); color:var(--muted);
+  padding:6px 10px; font-family:inherit; font-size:12px; cursor:pointer; border-radius:4px;
+}
+.hire-btn{
+  background:var(--green); color:#11111B; font-weight:700; font-size:12px;
+  padding:7px 14px; border-radius:4px; letter-spacing:0.02em;
+}
 
-  /* ---------- HERO ---------- */
-  .hero{padding:72px 0 56px;}
-  .eyebrow{font-family:'IBM Plex Mono'; font-size:12px; color:var(--blue); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;}
-  .hero h1{font-size:44px; line-height:1.12; margin-bottom:14px;}
-  .hero h1 em{font-style:normal; color:var(--blue);}
-  .hero .role{font-size:17px; color:var(--muted); max-width:640px; margin-bottom:26px;}
-  .metarow{display:flex; flex-wrap:wrap; gap:10px 22px; font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--muted2); margin-bottom:30px;}
-  .metarow b{color:var(--text); font-weight:500;}
-  .cta-row{display:flex; flex-wrap:wrap; gap:12px;}
-  .btn{
-    font-family:'IBM Plex Mono'; font-size:13px; padding:11px 20px;
-    border:1px solid var(--blue-dim); color:var(--text); letter-spacing:0.02em;
-    display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
-  }
-  .btn.primary{background:var(--blue); color:#0A1520; border-color:var(--blue); font-weight:600;}
-  .btn.primary:hover{background:#8ec2f5;}
-  .btn:not(.primary):hover{border-color:var(--blue); color:var(--blue);}
+/* Body: sidebar + editor */
+.ide-body{display:flex; flex:1; min-height:0;}
 
-  /* ---------- LOG FEED (signature element) ---------- */
-  .logfeed{margin-top:44px;}
-  .logfeed .head{
-    display:flex; justify-content:space-between; align-items:center;
-    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--muted2);
-    padding-bottom:10px; margin-bottom:14px; border-bottom:1px dashed var(--line);
-    text-transform:uppercase; letter-spacing:0.06em;
-  }
-  #log{font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--muted); min-height:210px;}
-  #log .line{white-space:pre-wrap; opacity:0; animation:appear .25s forwards;}
-  #log .ts{color:var(--muted2);}
-  #log .lvl{color:var(--green); font-weight:600;}
-  #log .k{color:var(--blue);}
-  #log .cursor{display:inline-block; width:7px; height:14px; background:var(--blue); vertical-align:-2px; animation:blink 1s step-end infinite;}
-  @keyframes appear{to{opacity:1;}}
-  @keyframes blink{50%{opacity:0;}}
+/* Sidebar file tree */
+.sidebar{
+  width:230px; flex-shrink:0; background:var(--sidebar);
+  border-right:1px solid var(--line); padding:18px 0;
+  position:sticky; top:45px; align-self:flex-start; height:calc(100vh - 45px);
+  overflow-y:auto;
+}
+.sb-label{color:var(--muted2); font-size:10.5px; letter-spacing:0.1em; padding:0 18px 10px; text-transform:uppercase;}
+.sb-folder{color:var(--muted); font-size:12.5px; padding:6px 18px; display:flex; align-items:center; gap:7px;}
+.sb-item{
+  display:flex; align-items:center; gap:9px; padding:7px 18px 7px 34px;
+  color:var(--muted); font-size:12.8px; cursor:pointer; border-left:2px solid transparent;
+  transition:background .12s, color .12s;
+}
+.sb-item:hover{background:var(--panel); color:var(--text);}
+.sb-item.active{background:var(--panel2); color:var(--text); border-left-color:var(--blue);}
+.sb-icon{width:14px; text-align:center; font-size:11px;}
+.sb-item[data-lang="md"] .sb-icon{color:var(--blue);}
+.sb-item[data-lang="json"] .sb-icon{color:var(--yellow);}
+.sb-item[data-lang="php"] .sb-icon{color:var(--purple);}
+.sb-item[data-lang="yaml"] .sb-icon{color:var(--red);}
+.sb-item[data-lang="sh"] .sb-icon{color:var(--green);}
+.sb-item[data-lang="config"] .sb-icon{color:var(--teal);}
 
-  /* ---------- SECTION SHELL ---------- */
-  section{padding:64px 0;}
-  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:30px;}
-  .sec-num{font-family:'IBM Plex Mono'; color:var(--blue-dim); font-size:13px;}
-  .sec-head h2{font-size:26px;}
-  .sec-line{flex:1; height:1px; background:var(--line);}
+/* Editor area */
+.editor-area{flex:1; min-width:0; display:flex; flex-direction:column;}
+.tabs{
+  display:flex; background:var(--sidebar); border-bottom:1px solid var(--line);
+  overflow-x:auto;
+}
+.tab{
+  display:flex; align-items:center; gap:8px; padding:10px 16px;
+  font-size:12.5px; color:var(--muted); border-right:1px solid var(--line);
+  cursor:pointer; white-space:nowrap; background:var(--sidebar);
+}
+.tab.active{background:var(--bg); color:var(--text); border-top:2px solid var(--blue); padding-top:8px;}
+.tab .x{color:var(--muted2); font-size:13px;}
 
-  /* ---------- SKILLS ---------- */
-  .skillgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
-  .skillcat{padding:20px;}
-  .skillcat h3{font-size:13px; font-family:'IBM Plex Mono'; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;}
-  .chips{display:flex; flex-wrap:wrap; gap:7px;}
-  .chip{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--muted); border:1px solid var(--line); padding:4px 9px; border-radius:2px;}
+.content-scroll{flex:1; overflow-y:auto;}
 
-  /* ---------- EXPERIENCE ---------- */
-  .exp{position:relative; padding-left:28px; border-left:1px solid var(--line);}
-  .exp-item{position:relative; padding-bottom:44px;}
-  .exp-item:last-child{padding-bottom:0;}
-  .exp-item::before{
-    content:''; position:absolute; left:-33px; top:4px; width:9px; height:9px;
-    background:var(--bg); border:2px solid var(--blue); border-radius:50%;
-  }
-  .exp-item .role-row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; margin-bottom:4px;}
-  .exp-item h3{font-size:18px;}
-  .exp-item .dates{font-family:'IBM Plex Mono'; font-size:12px; color:var(--blue); white-space:nowrap;}
-  .exp-item .company{color:var(--muted); font-size:14px; margin-bottom:12px;}
-  .exp-item ul{padding-left:18px; color:var(--muted); font-size:14.5px;}
-  .exp-item li{margin-bottom:7px;}
-  .exp-item li::marker{color:var(--blue-dim);}
+/* Code sections */
+.code-block{padding:36px 40px 36px 20px; border-bottom:1px solid var(--line-soft); counter-reset:line;}
+.code-block:last-child{border-bottom:none;}
+.code-line{
+  counter-increment:line; position:relative; padding-left:3.6em;
+  min-height:1.7em; line-height:1.75;
+}
+.code-line::before{
+  content:counter(line); position:absolute; left:0; width:2.6em; text-align:right;
+  color:var(--muted2); font-size:12px; opacity:.6;
+}
+.code-line.blank::before{content:'';}
+.kw{color:var(--purple);}
+.str{color:var(--teal);}
+.num{color:var(--peach);}
+.fn{color:var(--blue); font-weight:600;}
+.com{color:var(--muted2); font-style:italic;}
+.prop{color:var(--red);}
+.tagname{color:var(--yellow);}
+.punc{color:var(--muted);}
 
-  /* ---------- PROJECTS ---------- */
-  .projgrid{display:grid; grid-template-columns:1fr; gap:18px;}
-  .proj{padding:24px;}
-  .proj .tag{font-family:'IBM Plex Mono'; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;}
-  .proj h3{font-size:18px; margin-bottom:10px;}
-  .proj p{color:var(--muted); font-size:14.5px;}
-  .proj.featured{border-color:var(--blue-dim); background:linear-gradient(180deg, #12233A, #0D1A28);}
+/* ============ HERO (about.md) ============ */
+.hero-line{padding-left:0 !important;}
 
-  /* ---------- EDUCATION / LANG ---------- */
-  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
-  .infoblock{padding:22px;}
-  .infoblock h3{font-size:13px; font-family:'IBM Plex Mono'; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;}
-  .infoblock p{font-size:14.5px; color:var(--muted); margin-bottom:8px;}
-  .infoblock p b{color:var(--text); font-weight:500;}
+.about-hero{
+  position:relative; max-width:760px; margin:0 auto; padding:10px 10px 6px;
+  text-align:center; display:flex; flex-direction:column; align-items:center;
+}
 
-  /* ---------- FOOTER ---------- */
-  footer{border-top:1px solid var(--line); padding:40px 0; text-align:center;}
-  footer .mono{color:var(--muted2); font-size:12px;}
-  footer a{color:var(--blue);}
+/* blurred colour blobs */
+.blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.30; z-index:0; pointer-events:none;}
+.blob.b1{width:260px; height:260px; background:var(--purple); top:-30px; left:-60px;}
+.blob.b2{width:220px; height:220px; background:var(--peach); bottom:20px; right:-50px;}
+.blob.b3{width:180px; height:180px; background:var(--blue); top:120px; right:40px; opacity:.20;}
 
-  @media(max-width:720px){
-    .hero h1{font-size:32px;}
-    .skillgrid{grid-template-columns:1fr;}
-    .twocol{grid-template-columns:1fr;}
-    .navlinks{display:none;}
-  }
+/* social rail */
+.social-rail{
+  position:absolute; left:-56px; top:60px;
+  display:flex; flex-direction:column; gap:16px; z-index:5;
+}
+.social-rail a{
+  width:34px; height:34px; border:1px solid var(--line); border-radius:8px;
+  display:flex; align-items:center; justify-content:center; color:var(--muted);
+  font-size:12.5px; background:var(--panel); transition:.18s;
+}
+.social-rail a:hover{border-color:var(--teal); color:var(--teal); transform:translateY(-2px);}
+
+/* eyebrow pill */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px; font-size:11px; color:var(--muted);
+  border:1px solid var(--line); background:var(--panel); padding:6px 13px; border-radius:20px;
+  margin-bottom:26px; z-index:2; position:relative;
+}
+.eyebrow b{color:var(--text); font-weight:500;}
+.eyebrow::before{content:'●'; color:var(--green); font-size:7px;}
+
+/* portrait rig */
+.portrait-rig{position:relative; z-index:2; margin-bottom:6px;}
+.arch{
+  width:172px; height:216px; border-radius:86px 86px 12px 12px;
+  overflow:hidden; border:1px solid var(--line);
+  background:linear-gradient(160deg, var(--panel), var(--sidebar));
+  position:relative; box-shadow:0 24px 50px -18px rgba(0,0,0,.6);
+}
+.arch img{width:100%; height:100%; object-fit:cover; display:block;}
+
+.connector{
+  position:absolute; top:-26px; left:-60px; width:130px; height:130px; z-index:1;
+  stroke:var(--teal); stroke-width:1.4; fill:none; stroke-dasharray:4 5; opacity:.5;
+}
+
+.badge{
+  position:absolute; top:-12px; right:-48px; width:96px; height:96px; z-index:3;
+  animation:spin 16s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.badge-core{
+  position:absolute; inset:31px; border-radius:50%; background:var(--teal);
+  display:flex; align-items:center; justify-content:center; color:#11111B; font-size:13px;
+  box-shadow:0 0 20px rgba(148,226,213,.45);
+}
+
+/* name + subtitle */
+.hero-name{
+  font-weight:700; line-height:.98;
+  font-size:clamp(38px,6.5vw,64px); margin:22px 0 12px; z-index:2; position:relative;
+  color:var(--text);
+}
+.hero-name .accent{color:var(--teal);}
+.hero-role{
+  font-size:12.5px; letter-spacing:.12em; color:var(--muted); text-transform:uppercase;
+  margin-bottom:20px; z-index:2; position:relative;
+}
+.hero-role .sep{color:var(--muted2); margin:0 8px;}
+.hero-role .k1{color:var(--purple);}
+.hero-role .k2{color:var(--peach);}
+.hero-role .k3{color:var(--blue);}
+
+.hero-sub-text{
+  color:var(--muted); font-size:13.5px; max-width:520px; line-height:1.7;
+  margin-bottom:22px; z-index:2; position:relative;
+}
+
+.hero-meta{display:flex; flex-wrap:wrap; justify-content:center; gap:6px 18px; font-size:11.5px; color:var(--muted2); margin-bottom:24px; z-index:2; position:relative;}
+.hero-meta b{color:var(--muted);}
+
+.hero-ctas{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; z-index:2; position:relative;}
+.cta{
+  font-size:12.5px; padding:10px 18px; border:1px solid var(--line); border-radius:4px;
+  display:inline-flex; align-items:center; gap:8px; transition:.15s;
+}
+.cta.primary{background:var(--teal); color:#11111B; border-color:var(--teal); font-weight:700;}
+.cta.primary:hover{background:#a9f0e2;}
+.cta:not(.primary):hover{border-color:var(--blue); color:var(--blue);}
+
+/* status pulse */
+.pulse{display:inline-flex; align-items:center; gap:6px; color:var(--green); font-size:11.5px;}
+.pulse .d{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+@media(prefers-reduced-motion: reduce){
+  .badge, .pulse .d{animation:none;}
+}
+
+/* Section headers */
+.sec-tag{display:inline-block; font-size:11px; color:var(--muted2); letter-spacing:.08em; margin-bottom:6px;}
+
+/* Experience cards */
+.exp-card{border:1px solid var(--line); border-radius:6px; padding:20px 22px; margin:16px 0; background:var(--panel); opacity:0; transform:translateY(14px); transition:opacity .5s, transform .5s;}
+.exp-card.in{opacity:1; transform:none;}
+.exp-head{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; margin-bottom:4px;}
+.exp-role{font-family:'Space Grotesk'; font-size:16.5px; color:var(--text); font-weight:600;}
+.exp-period{color:var(--blue); font-size:12px;}
+.exp-co{color:var(--muted); font-size:12.5px; margin-bottom:12px;}
+.exp-list{list-style:none;}
+.exp-list li{position:relative; padding-left:20px; margin-bottom:8px; color:var(--muted); font-size:13px; line-height:1.6;}
+.exp-list li::before{content:'▸'; position:absolute; left:0; color:var(--teal);}
+
+/* Project functions */
+.proj-fn{margin-bottom:26px; opacity:0; transform:translateY(14px); transition:opacity .5s, transform .5s;}
+.proj-fn.in{opacity:1; transform:none;}
+.proj-fn-name{font-size:15px; margin-bottom:8px;}
+.proj-body{padding-left:1.6em; border-left:1px dashed var(--line); margin-left:.3em; color:var(--muted); font-size:13px; line-height:1.75;}
+.proj-tag{display:inline-block; font-size:10.5px; color:var(--peach); background:rgba(250,179,135,.1); border:1px solid rgba(250,179,135,.3); padding:2px 8px; border-radius:10px; margin-bottom:8px;}
+
+/* Skills */
+.skill-groups{display:grid; grid-template-columns:1fr 1fr; gap:20px; padding-left:0;}
+.skill-group{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:18px 20px;}
+.skill-group h4{color:var(--yellow); font-size:12px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; font-weight:600;}
+.skill-tags{display:flex; flex-wrap:wrap; gap:7px;}
+.skill-tag{
+  font-size:11.5px; color:var(--muted); border:1px solid var(--line); padding:4px 10px; border-radius:4px;
+  opacity:0; transform:scale(.85); transition:opacity .35s, transform .35s, border-color .2s, color .2s;
+}
+.skill-tag.in{opacity:1; transform:scale(1);}
+.skill-tag:hover{border-color:var(--teal); color:var(--teal);}
+
+/* Education/contact */
+.yaml-row{margin-bottom:10px; color:var(--muted); font-size:13.5px;}
+.yaml-key{color:var(--red);}
+
+.contact-links{display:flex; flex-direction:column; gap:10px; margin-top:6px;}
+.contact-links a{color:var(--blue); font-size:13.5px;}
+.contact-links a:hover{color:var(--teal); text-decoration:underline;}
+
+/* ============ TERMINAL PANEL ============ */
+.terminal{
+  background:var(--sidebar); border-top:1px solid var(--line);
+  padding:0; height:190px; display:flex; flex-direction:column; flex-shrink:0;
+}
+.term-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 16px; border-bottom:1px solid var(--line); font-size:11.5px; color:var(--muted2);
+}
+.term-body{flex:1; overflow-y:auto; padding:12px 16px; font-size:12.5px; line-height:1.7;}
+.term-line{color:var(--muted); opacity:0; animation:appear .2s forwards;}
+.term-line .prompt{color:var(--green);}
+.term-line .ok{color:var(--teal);}
+.term-line .path{color:var(--blue);}
+@keyframes appear{to{opacity:1;}}
+.cursor-blink{display:inline-block; width:7px; height:13px; background:var(--teal); vertical-align:-2px; animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+/* Statusbar */
+.statusbar{
+  background:var(--blue); color:#11111B; font-size:11px; font-weight:600;
+  display:flex; align-items:center; justify-content:space-between; padding:4px 16px;
+}
+.statusbar span{display:flex; align-items:center; gap:16px;}
+
+/* Minimap decorative (desktop only) */
+.minimap{width:70px; flex-shrink:0; background:var(--sidebar); border-left:1px solid var(--line); padding:20px 10px; display:flex; flex-direction:column; gap:5px;}
+.minimap .mm-bar{height:3px; background:var(--line); border-radius:2px;}
+
+@media(max-width:900px){
+  .minimap{display:none;}
+  .sidebar{position:fixed; left:-260px; top:45px; z-index:90; transition:left .2s; box-shadow:8px 0 24px rgba(0,0,0,.4);}
+  .sidebar.open{left:0;}
+  .menu-btn{display:block;}
+  .skill-groups{grid-template-columns:1fr;}
+  .code-block{padding:26px 18px 26px 12px;}
+
+  .about-hero{padding-top:56px;}
+  .social-rail{position:static; flex-direction:row; justify-content:center; margin-bottom:22px;}
+  .blob.b1{width:160px; height:160px; left:0;}
+  .blob.b2{width:150px; height:150px; right:0;}
+  .blob.b3{display:none;}
+  .badge{width:78px; height:78px; right:-24px; top:-8px;}
+  .badge-core{inset:26px; font-size:11px;}
+  .arch{width:150px; height:190px; border-radius:75px 75px 10px 10px;}
+  .connector{display:none;}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <nav>
-      <div class="brand">ROSHNA<span>.</span>PJ</div>
-      <div class="navlinks">
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="status-pill"><span class="dot"></span>OPEN_TO_RELOCATE :: DUBAI</div>
-    </nav>
+<div class="ide">
+
+  <div class="titlebar">
+    <div class="tl-left">
+      <button class="menu-btn" id="menuBtn">☰ files</button>
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="tl-title">roshna-portfolio — <b>Visual Studio Code</b></div>
+    </div>
+    <div class="tl-right">
+      <span class="pulse"><span class="d"></span>OPEN TO RELOCATE — DUBAI</span>
+      <a class="hire-btn" href="mailto:roshnapjputhenveettil@gmail.com">Hire Me</a>
+    </div>
   </div>
-</header>
 
-<div class="wrap">
+  <div class="ide-body">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="eyebrow">// backend_systems.engineer</div>
-    <h1>Roshna P John builds <em>the infrastructure</em><br>governments and startups run on.</h1>
-    <p class="role">PHP / Symfony full-stack developer — secure APIs, real-time systems and scalable backends. 3.8+ years shipping production systems, from a state-level government budget platform to 100+ startup builds.</p>
-    <div class="metarow">
-      <span><b>Based:</b> Trivandrum, Kerala, IN</span>
-      <span><b>Nationality:</b> Indian</span>
-      <span><b>Notice period:</b> 10 days</span>
-      <span><b>Visa:</b> Requires employment visa</span>
-    </div>
-    <div class="cta-row">
-      <a class="btn primary" href="mailto:roshnapjputhenveettil@gmail.com">mail --to roshna</a>
-      <a class="btn" href="https://linkedin.com/in/roshnapjohn" target="_blank">linkedin.com/in/roshnapjohn</a>
-      <a class="btn" href="tel:+919061944240">+91 90619 44240</a>
+    <div class="sidebar" id="sidebar">
+      <div class="sb-label">Explorer</div>
+      <div class="sb-folder">📁 roshna-portfolio</div>
+      <div class="sb-item active" data-lang="md" data-target="sec-about"><span class="sb-icon">◆</span>about.md</div>
+      <div class="sb-item" data-lang="json" data-target="sec-experience"><span class="sb-icon">{}</span>experience.json</div>
+      <div class="sb-folder">&nbsp;&nbsp;📁 projects</div>
+      <div class="sb-item" data-lang="php" data-target="sec-projects"><span class="sb-icon">&lt;/&gt;</span>&nbsp;&nbsp;best.php</div>
+      <div class="sb-item" data-lang="config" data-target="sec-skills"><span class="sb-icon">⚙</span>skills.config</div>
+      <div class="sb-item" data-lang="yaml" data-target="sec-education"><span class="sb-icon">▤</span>education.yaml</div>
+      <div class="sb-item" data-lang="sh" data-target="sec-contact"><span class="sb-icon">$</span>contact.sh</div>
     </div>
 
-    <!-- SIGNATURE: audit log feed -->
-    <div class="logfeed panel">
-      <div class="c-tl"></div>
-      <div class="head"><span>career_audit.log</span><span>tail -f</span></div>
-      <div id="log"></div>
-    </div>
-  </section>
+    <div class="editor-area">
+      <div class="tabs" id="tabs">
+        <div class="tab active" data-target="sec-about">◆ about.md <span class="x">×</span></div>
+        <div class="tab" data-target="sec-experience">{} experience.json <span class="x">×</span></div>
+        <div class="tab" data-target="sec-projects">&lt;/&gt; best.php <span class="x">×</span></div>
+        <div class="tab" data-target="sec-skills">⚙ skills.config <span class="x">×</span></div>
+        <div class="tab" data-target="sec-education">▤ education.yaml <span class="x">×</span></div>
+        <div class="tab" data-target="sec-contact">$ contact.sh <span class="x">×</span></div>
+      </div>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="sec-head"><span class="sec-num">01</span><h2>Experience</h2><div class="sec-line"></div></div>
-    <div class="exp">
-      <div class="exp-item">
-        <div class="role-row"><h3>PHP Developer — National Informatics Centre (NIC), Trivandrum</h3><span class="dates">Sep 2025 – Present</span></div>
-        <div class="company">Government of India's premier IT organization — mission-critical digital infrastructure for central and state departments.</div>
-        <ul>
-          <li>Part of a 7-member team rebuilding the Kerala Budget Estimation & Allocation System (BEST) on Symfony 6.4, migrating off a legacy platform with zero loss of existing capability.</li>
-          <li>Led legacy-to-new data migration with validation and reconciliation for full integrity.</li>
-          <li>Built RBAC across 10+ user profiles (Maker, Verifier, Approver, department seats) with audit-ready logging.</li>
-          <li>Improved DB performance via schema modeling and query tuning — cut slow queries ~40% on large datasets.</li>
-          <li>Used Claude and the ChatGPT API for architecture planning, code review, and documentation.</li>
-        </ul>
-      </div>
-      <div class="exp-item">
-        <div class="role-row"><h3>PHP Full Stack Developer — LiveAs Technologies, Bengaluru</h3><span class="dates">Nov 2022 – Sep 2025</span></div>
-        <div class="company">Bengaluru-based software services firm — SaaS, e-commerce, websites, client portals.</div>
-        <ul>
-          <li>Owned full project lifecycle — client calls through go-live — across 3–5 concurrent projects, ~90% on-schedule delivery.</li>
-          <li>Delivered 100+ production web applications end-to-end.</li>
-          <li>Built a real-time chat & A/V system (SSE + WebRTC) for 50+ concurrent users with file sharing and read states.</li>
-          <li>Designed secure auth — OTP, IP-based access, audit logging — across multi-role SaaS apps.</li>
-          <li>Automated internal workflows via ChatGPT API, cutting repetitive dev effort ~55%.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+      <div class="content-scroll" id="scrollArea">
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="sec-head"><span class="sec-num">02</span><h2>Key Projects</h2><div class="sec-line"></div></div>
-    <div class="projgrid">
-      <div class="proj panel featured">
-        <div class="c-tl"></div>
-        <div class="tag">Currently building · NIC</div>
-        <h3>Kerala Budget Estimation & Allocation System (BEST)</h3>
-        <p>A 12-step Financial Year Reinitialization module — re-architected from scattered AJAX calls into a single streamed NDJSON endpoint for live progress — safely resetting 30+ transactional tables at fiscal year-end with fail-safe rollback. Plus a multi-role permission system, a <span class="mono">getMultiRowWorkflowState()</span> engine for file-level verify/sendback/approve actions, and an audit logging system that traces every DB operation to root cause in minutes.</p>
-      </div>
-      <div class="proj panel">
-        <div class="c-tl"></div>
-        <div class="tag">LiveAs Technologies</div>
-        <h3>IntraLive — multi-branch news streaming platform</h3>
-        <p>A priority-based display engine for organization-wide news broadcast — permanent items, timed temporary items, and a flash-news override that pins alerts to a live ticker.</p>
-      </div>
-      <div class="proj panel">
-        <div class="c-tl"></div>
-        <div class="tag">LiveAs Technologies</div>
-        <h3>DCIM — team & customer interaction module</h3>
-        <p>A project-linked group chat connecting client, sales, manager, and developer in one thread, with per-phase chat access control — built to close a recurring miscommunication gap.</p>
-      </div>
-      <div class="proj panel">
-        <div class="c-tl"></div>
-        <div class="tag">LiveAs Technologies</div>
-        <h3>LynkUp — internal video calling & screen sharing</h3>
-        <p>A Skype-like internal platform for video calls, screen sharing, chat, and multi-user meetings.</p>
-      </div>
-      <div class="proj panel">
-        <div class="c-tl"></div>
-        <div class="tag">LiveAs Technologies</div>
-        <h3>Propels — proposal-generation tool</h3>
-        <p>A drag-and-drop template system for the sales team to assemble reusable requirement blocks into styled proposals, with one-click email delivery.</p>
-      </div>
-      <div class="proj panel">
-        <div class="c-tl"></div>
-        <div class="tag">LiveAs Technologies</div>
-        <h3>DevPro — time & progress tracking</h3>
-        <p>Role-based start/pause/end task timers rolling up into manager and developer dashboards.</p>
-      </div>
-    </div>
-  </section>
+        <!-- ABOUT / HOME -->
+        <section class="code-block" id="sec-about">
+          <div class="code-line blank hero-line">
+            <span class="com">&nbsp;&nbsp;&nbsp;&nbsp;# roshna-portfolio / about.md</span>
+          </div>
+          <div class="code-line blank hero-line">&nbsp;</div>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="sec-head"><span class="sec-num">03</span><h2>Core Technical Skills</h2><div class="sec-line"></div></div>
-    <div class="skillgrid">
-      <div class="skillcat panel"><div class="c-tl"></div><h3>Backend</h3>
-        <div class="chips">
-          <span class="chip">PHP 8.x</span><span class="chip">Symfony</span><span class="chip">Doctrine ORM</span>
-          <span class="chip">Laravel (in progress)</span><span class="chip">REST APIs</span><span class="chip">MVC</span>
-          <span class="chip">Microservices</span><span class="chip">Cron Jobs</span>
-        </div>
-      </div>
-      <div class="skillcat panel"><div class="c-tl"></div><h3>Data</h3>
-        <div class="chips">
-          <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Schema Design</span>
-          <span class="chip">Indexing</span><span class="chip">Query Optimization</span>
-        </div>
-      </div>
-      <div class="skillcat panel"><div class="c-tl"></div><h3>Real-Time & Security</h3>
-        <div class="chips">
-          <span class="chip">SSE</span><span class="chip">WebRTC</span><span class="chip">RBAC</span>
-          <span class="chip">Session Mgmt</span><span class="chip">OTP / Email Verify</span><span class="chip">Audit Logging</span>
-        </div>
-      </div>
-      <div class="skillcat panel"><div class="c-tl"></div><h3>Frontend & Tools</h3>
-        <div class="chips">
-          <span class="chip">JS (ES6+)</span><span class="chip">Tailwind</span><span class="chip">Bootstrap</span>
-          <span class="chip">Twig</span><span class="chip">AJAX</span><span class="chip">Figma</span>
-          <span class="chip">Git / GitHub / GitLab</span><span class="chip">Claude & ChatGPT API</span>
-        </div>
-      </div>
-    </div>
-  </section>
+          <div class="code-line blank hero-line">
+            <div class="about-hero">
+              <div class="blob b1"></div>
+              <div class="blob b2"></div>
+              <div class="blob b3"></div>
 
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="sec-head"><span class="sec-num">04</span><h2>Education & Languages</h2><div class="sec-line"></div></div>
-    <div class="twocol">
-      <div class="infoblock panel"><div class="c-tl"></div>
-        <h3>Education & Awards</h3>
-        <p><b>B.Tech, CSE</b> — Rajiv Gandhi Institute of Technology (Govt.), Kottayam</p>
-        <p><b>Performance Excellence Award</b> — LiveAs Technologies, 2023</p>
-        <p><b>Database Management Systems</b> — NPTEL, IIT Kharagpur (Certified)</p>
-      </div>
-      <div class="infoblock panel"><div class="c-tl"></div>
-        <h3>Languages</h3>
-        <p><b>English</b> — Professional working proficiency</p>
-        <p><b>Malayalam</b> — Native</p>
-        <p><b>Hindi</b> — Basic</p>
-        <p><b>Tamil</b> — Basic</p>
+              <div class="social-rail">
+                <a href="https://linkedin.com/in/roshnapjohn" target="_blank" title="LinkedIn">in</a>
+                <a href="https://github.com/" target="_blank" title="GitHub">gh</a>
+                <a href="mailto:roshnapjputhenveettil@gmail.com" title="Email">@</a>
+              </div>
+
+              <div class="eyebrow"><b>3.8+ yrs</b>&nbsp;shipping production PHP systems</div>
+
+              <div class="portrait-rig">
+                <svg class="connector" viewBox="0 0 130 130"><path d="M5,105 C10,52 55,18 115,13"/></svg>
+                <div class="arch">
+                  <img src="roshna-portrait.jpg" alt="Roshna P John">
+                </div>
+                <div class="badge">
+                  <svg viewBox="0 0 96 96" width="96" height="96">
+                    <defs><path id="circlePath" d="M 48,48 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/></defs>
+                    <text font-family="JetBrains Mono" font-size="7.6" fill="#9399B2" letter-spacing="1.6">
+                      <textPath href="#circlePath" startOffset="0%">OPEN TO RELOCATE • DUBAI, UAE • OPEN TO RELOCATE • </textPath>
+                    </text>
+                  </svg>
+                  <div class="badge-core">→</div>
+                </div>
+              </div>
+
+              <h1 class="hero-name disp">Roshna <span class="accent">P John</span></h1>
+              <div class="hero-role">
+                Backend Systems Engineer<span class="sep">//</span><span class="k1">PHP</span><span class="sep">·</span><span class="k2">Symfony</span><span class="sep">·</span><span class="k3">MySQL</span>
+              </div>
+
+              <p class="hero-sub-text">Secure APIs, real-time systems & scalable backends. Currently rebuilding a state-level government budget platform at NIC — nearly three years before that at a Bengaluru startup, shipping 100+ production apps end-to-end.</p>
+
+              <div class="hero-meta">
+                <span><b>Location:</b> Trivandrum, Kerala, IN</span>
+                <span><b>Notice period:</b> 10 days</span>
+                <span><b>Visa:</b> Requires employment visa</span>
+              </div>
+
+              <div class="hero-ctas">
+                <a class="cta primary" href="mailto:roshnapjputhenveettil@gmail.com">✉ roshnapjputhenveettil@gmail.com</a>
+                <a class="cta" data-target="sec-projects" href="#sec-projects">View Projects ↓</a>
+                <a class="cta" href="tel:+919061944240">+91 90619 44240</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section class="code-block" id="sec-experience">
+          <div class="code-line"><span class="kw">const</span> <span class="fn">experience</span> <span class="punc">= [</span></div>
+          <div class="code-line blank">
+            <div class="exp-card">
+              <div class="exp-head">
+                <span class="exp-role">PHP Developer — National Informatics Centre (NIC)</span>
+                <span class="exp-period">Sep 2025 – Present</span>
+              </div>
+              <div class="exp-co">Trivandrum · Government of India's premier IT organization — mission-critical digital infrastructure for central and state departments</div>
+              <ul class="exp-list">
+                <li>Part of a 7-member team rebuilding the Kerala Budget Estimation & Allocation System (BEST) on Symfony 6.4, migrating off legacy with zero loss of capability.</li>
+                <li>Studied and mapped the entire legacy system — business rules, approval hierarchies, edge cases — before rebuild.</li>
+                <li>Led legacy-to-new data migration with validation & reconciliation for full integrity.</li>
+                <li>Rebuilt core workflows with streamlined approval paths while preserving backward compatibility.</li>
+                <li>Handled multi-role modules — Estimate Management, GIA, Administrative Management, Salary/Budget Reporting — across 10+ user profiles.</li>
+                <li>Designed fine-grained RBAC with audit-ready logging and session security for government compliance.</li>
+                <li>Built RESTful APIs and multi-level inter-departmental approval workflows — cross-team coordination efficiency +30%.</li>
+                <li>Improved DB performance through schema modeling and query tuning — slow queries cut ~40% on large datasets.</li>
+                <li>Used Claude & the ChatGPT API for architecture planning, code review and documentation.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-line blank">
+            <div class="exp-card">
+              <div class="exp-head">
+                <span class="exp-role">PHP Full Stack Developer — LiveAs Technologies</span>
+                <span class="exp-period">Nov 2022 – Sep 2025</span>
+              </div>
+              <div class="exp-co">Bengaluru · Software services firm — SaaS, e-commerce, websites, client portals</div>
+              <ul class="exp-list">
+                <li>Owned the full project lifecycle — client calls through go-live — improving on-time delivery ~20%.</li>
+                <li>Independently managed 3–5 concurrent client projects, ~90% on-schedule delivery.</li>
+                <li>Delivered 100+ production web applications end-to-end.</li>
+                <li>Handled deployment & go-live ops — server setup, DNS/domain mapping, DB migration — cutting errors ~35%.</li>
+                <li>Built a real-time chat & A/V system (SSE + WebRTC) for 50+ concurrent users, with file sharing and read states.</li>
+                <li>Designed secure auth — OTP, IP-based access, audit logging — across multi-role SaaS apps.</li>
+                <li>Automated internal workflows via ChatGPT API — repetitive dev effort cut ~55%.</li>
+                <li>Converted Figma designs into pixel-accurate, mobile-first interfaces across 100+ client apps.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-line"><span class="punc">];</span></div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="code-block" id="sec-projects">
+          <div class="code-line"><span class="com">// projects/ — key builds</span></div>
+          <div class="code-line blank">
+            <div class="proj-fn">
+              <span class="proj-tag">currently building · NIC</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">BEST_FinancialYearReinitialization</span><span class="punc">() {</span></div>
+              <div class="proj-body">
+                A 12-step Financial Year Reinitialization module — re-architected from scattered AJAX calls into a single streamed <span class="str">NDJSON</span> endpoint for live progress tracking — safely resetting 30+ transactional tables at fiscal year-end with fail-safe rollback via temporary backups. Redesigned the legacy per-year backup pattern into one consolidated <span class="str">tr_&lt;table&gt;_backup</span> table with a year-identifier column, cutting schema sprawl across 25+ tables.<br><br>
+                Also shipped: a multi-role permission system across 10+ user profiles, a <span class="fn">getMultiRowWorkflowState()</span> engine for file-level verify/sendback/approve actions, cross-module GIA bug fixes, and a full audit logging system that traces every DB operation to root cause within minutes.
+              </div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+
+            <div class="proj-fn">
+              <span class="proj-tag">LiveAs Technologies</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">IntraLive</span><span class="punc">() {</span> <span class="com">// multi-branch news streaming</span></div>
+              <div class="proj-body">Priority-based display engine for organization-wide news broadcast — permanent items, timed temporary items, and a flash-news override that pins alerts to a live ticker.</div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+
+            <div class="proj-fn">
+              <span class="proj-tag">LiveAs Technologies</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">DCIM</span><span class="punc">() {</span> <span class="com">// team & customer interaction module</span></div>
+              <div class="proj-body">Project-linked group chat connecting client, sales, manager and developer in one thread — with per-phase chat access control — built to close a recurring miscommunication gap.</div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+
+            <div class="proj-fn">
+              <span class="proj-tag">LiveAs Technologies</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">LynkUp</span><span class="punc">() {</span> <span class="com">// internal video calling & screen sharing</span></div>
+              <div class="proj-body">A Skype-like internal platform for video calls, screen sharing, chat and multi-user meetings.</div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+
+            <div class="proj-fn">
+              <span class="proj-tag">LiveAs Technologies</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">Propels</span><span class="punc">() {</span> <span class="com">// proposal-generation tool</span></div>
+              <div class="proj-body">Drag-and-drop template system for the sales team to assemble reusable requirement blocks into styled proposals, with one-click email delivery.</div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+
+            <div class="proj-fn">
+              <span class="proj-tag">LiveAs Technologies</span>
+              <div class="proj-fn-name"><span class="kw">function</span> <span class="fn">DevPro</span><span class="punc">() {</span> <span class="com">// time & progress tracking</span></div>
+              <div class="proj-body">Role-based start/pause/end task timers rolling up into manager and developer dashboards.</div>
+              <div class="code-line" style="padding-left:0; margin-top:8px;"><span class="punc">}</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="code-block" id="sec-skills">
+          <div class="code-line"><span class="prop">skills</span><span class="punc">:</span></div>
+          <div class="code-line blank">
+            <div class="skill-groups">
+              <div class="skill-group">
+                <h4>Backend</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">PHP 8.x</span><span class="skill-tag">Symfony</span><span class="skill-tag">Doctrine ORM</span>
+                  <span class="skill-tag">Laravel (in progress)</span><span class="skill-tag">REST APIs</span><span class="skill-tag">MVC</span>
+                  <span class="skill-tag">Microservices</span><span class="skill-tag">Slim Framework</span><span class="skill-tag">Cron Jobs</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Databases</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">MySQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Schema Design</span>
+                  <span class="skill-tag">Indexing</span><span class="skill-tag">Query Optimization</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Real-Time & Security</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">SSE</span><span class="skill-tag">WebRTC</span><span class="skill-tag">RBAC</span>
+                  <span class="skill-tag">Session Mgmt</span><span class="skill-tag">OTP / Email Verify</span><span class="skill-tag">Audit Logging</span>
+                  <span class="skill-tag">Gov Compliance</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Frontend</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">JS (ES6+)</span><span class="skill-tag">HTML5 / CSS3</span><span class="skill-tag">Tailwind</span>
+                  <span class="skill-tag">Bootstrap</span><span class="skill-tag">jQuery</span><span class="skill-tag">Twig</span>
+                  <span class="skill-tag">AJAX</span><span class="skill-tag">Figma</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>DevOps & Tools</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">Git / GitHub / GitLab</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">Linux/Windows Servers</span>
+                  <span class="skill-tag">cPanel / Hostinger</span><span class="skill-tag">DNS</span><span class="skill-tag">DB Migrations</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>AI & Practices</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">Claude AI Platform</span><span class="skill-tag">ChatGPT API</span><span class="skill-tag">Agile/Scrum</span>
+                  <span class="skill-tag">PHPUnit</span><span class="skill-tag">Unit/Integration Testing</span><span class="skill-tag">Technical Docs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section class="code-block" id="sec-education">
+          <div class="code-line"><span class="prop">education</span><span class="punc">:</span></div>
+          <div class="code-line"><span class="yaml-key">degree</span><span class="punc">:</span> <span class="str">"B.Tech, Computer Science & Engineering"</span></div>
+          <div class="code-line"><span class="yaml-key">institute</span><span class="punc">:</span> <span class="str">"Rajiv Gandhi Institute of Technology (Govt.), Kottayam"</span></div>
+          <div class="code-line blank">&nbsp;</div>
+          <div class="code-line"><span class="prop">awards</span><span class="punc">:</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="punc">-</span> <span class="str">"Performance Excellence Award — LiveAs Technologies, 2023"</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="punc">-</span> <span class="str">"Database Management Systems — NPTEL, IIT Kharagpur (Certified)"</span></div>
+          <div class="code-line blank">&nbsp;</div>
+          <div class="code-line"><span class="prop">languages</span><span class="punc">:</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="yaml-key">English</span><span class="punc">:</span> <span class="str">Professional Working Proficiency</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="yaml-key">Malayalam</span><span class="punc">:</span> <span class="str">Native</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="yaml-key">Hindi</span><span class="punc">:</span> <span class="str">Basic</span></div>
+          <div class="code-line">&nbsp;&nbsp;<span class="yaml-key">Tamil</span><span class="punc">:</span> <span class="str">Basic</span></div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="code-block" id="sec-contact">
+          <div class="code-line"><span class="com">#!/bin/bash</span></div>
+          <div class="code-line"><span class="fn">echo</span> <span class="str">"Let's build something together."</span></div>
+          <div class="code-line blank">&nbsp;</div>
+          <div class="code-line blank">
+            <div class="contact-links">
+              <a href="mailto:roshnapjputhenveettil@gmail.com">→ roshnapjputhenveettil@gmail.com</a>
+              <a href="tel:+919061944240">→ +91 90619 44240</a>
+              <a href="https://linkedin.com/in/roshnapjohn" target="_blank">→ linkedin.com/in/roshnapjohn</a>
+              <a href="#" style="color:var(--muted);">→ Trivandrum, Kerala, India · Open to relocation — Dubai, UAE</a>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
-  </section>
+
+    <div class="minimap" id="minimap"></div>
+  </div>
+
+  <div class="statusbar">
+    <span>⎇ main<span id="statusFile">about.md</span></span>
+    <span>UTF-8 · LF · <span id="statusLang">Markdown</span></span>
+  </div>
+
+  <div class="terminal">
+    <div class="term-head"><span>TERMINAL — bash</span><span>roshna@portfolio:~$</span></div>
+    <div class="term-body" id="term"></div>
+  </div>
 
 </div>
 
-<footer id="contact">
-  <div class="wrap">
-    <p class="mono">roshnapjputhenveettil@gmail.com · +91 90619 44240 · <a href="https://linkedin.com/in/roshnapjohn" target="_blank">linkedin.com/in/roshnapjohn</a></p>
-    <p class="mono" style="margin-top:8px;">Trivandrum, Kerala · Open to relocation — Dubai, UAE</p>
-  </div>
-</footer>
-
 <script>
-const entries = [
-  {ts:"2022-11-01", lvl:"INFO", msg:"career.start company=LiveAs_Technologies role=Full_Stack_Developer"},
-  {ts:"2023-08-14", lvl:"INFO", msg:"award.granted name=Performance_Excellence_Award scope=high_priority_projects"},
-  {ts:"2025-06-30", lvl:"INFO", msg:"delivery.summary apps_shipped=100+ on_schedule=~90%"},
-  {ts:"2025-09-01", lvl:"INFO", msg:"career.transition company=NIC role=PHP_Developer status=current"},
-  {ts:"2025-09-01", lvl:"INFO", msg:"migration.legacy_to_symfony tables=30+ integrity_check=PASS"},
-  {ts:"2025-11-12", lvl:"INFO", msg:"rbac.deployed roles=10+ scope=maker,verifier,approver"},
-  {ts:"2025-12-03", lvl:"INFO", msg:"query.optimization slow_queries_reduced=40% dataset=large"},
-  {ts:"2026-02-18", lvl:"INFO", msg:"reinit_module.deployed steps=12 tables_reset=30+ rollback=safe"},
-];
+/* ---------- Navigation: sidebar + tabs + scroll sync ---------- */
+const sections = document.querySelectorAll('section.code-block');
+const sbItems = document.querySelectorAll('.sb-item');
+const tabItems = document.querySelectorAll('.tab');
+const statusFile = document.getElementById('statusFile');
+const statusLang = document.getElementById('statusLang');
+const scrollArea = document.getElementById('scrollArea');
+const sidebar = document.getElementById('sidebar');
+const menuBtn = document.getElementById('menuBtn');
 
-const log = document.getElementById('log');
-let i = 0;
+const meta = {
+  'sec-about': {file:' about.md', lang:'Markdown'},
+  'sec-experience': {file:' experience.json', lang:'JSON'},
+  'sec-projects': {file:' best.php', lang:'PHP'},
+  'sec-skills': {file:' skills.config', lang:'Config'},
+  'sec-education': {file:' education.yaml', lang:'YAML'},
+  'sec-contact': {file:' contact.sh', lang:'Shell Script'},
+};
 
-function colorize(msg){
-  return msg.replace(/([a-z_]+)=([^\s]+)/g, '<span class="k">$1</span>=$2');
+function setActive(id){
+  sbItems.forEach(el => el.classList.toggle('active', el.dataset.target === id));
+  tabItems.forEach(el => el.classList.toggle('active', el.dataset.target === id));
+  if(meta[id]){ statusFile.textContent = meta[id].file; statusLang.textContent = meta[id].lang; }
 }
 
-function typeNext(){
-  if(i >= entries.length){
+function goTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  sidebar.classList.remove('open');
+}
+
+document.querySelectorAll('[data-target]').forEach(el => {
+  el.addEventListener('click', (e) => { e.preventDefault(); goTo(el.dataset.target); });
+});
+
+menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) setActive(e.target.id); });
+}, {root: scrollArea, threshold: 0.35});
+sections.forEach(s => io.observe(s));
+
+/* ---------- Reveal animations for cards/tags ---------- */
+const revealTargets = document.querySelectorAll('.exp-card, .proj-fn, .skill-tag');
+const revealIO = new IntersectionObserver((entries) => {
+  entries.forEach((e, idx) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('in'), idx * 25);
+      revealIO.unobserve(e.target);
+    }
+  });
+}, {root: scrollArea, threshold: 0.15});
+revealTargets.forEach(el => revealIO.observe(el));
+
+/* ---------- Minimap decorative bars ---------- */
+const minimap = document.getElementById('minimap');
+for(let i=0;i<45;i++){
+  const bar = document.createElement('div');
+  bar.className = 'mm-bar';
+  bar.style.width = (30 + Math.random()*60) + '%';
+  minimap.appendChild(bar);
+}
+
+/* ---------- Terminal build log animation ---------- */
+const termLines = [
+  {p:true, text:'whoami'},
+  {out:'roshna-p-john <span class="ok">·</span> PHP / Symfony Full Stack Developer'},
+  {p:true, text:'cat experience.json | wc -l'},
+  {out:'3.8+ years <span class="ok">·</span> 2 roles <span class="ok">·</span> 100+ apps shipped'},
+  {p:true, text:'npm run build --target=dubai'},
+  {out:'<span class="ok">✓</span> compiling experience... done'},
+  {out:'<span class="ok">✓</span> compiling projects... 6 shipped'},
+  {out:'<span class="ok">✓</span> optimizing skills... 40+ tags'},
+  {out:'<span class="ok">✓</span> build complete'},
+  {p:true, text:'./deploy.sh --to=<span class="path">Dubai, UAE</span>'},
+  {out:'<span class="ok">✓</span> deployed — ready to join a GCC engineering team 🇦🇪'},
+];
+const term = document.getElementById('term');
+let ti = 0;
+function typeTerm(){
+  if(ti >= termLines.length){
     const cur = document.createElement('div');
-    cur.className = 'line';
-    cur.style.opacity = 1;
-    cur.innerHTML = '<span class="cursor"></span>';
-    log.appendChild(cur);
+    cur.className = 'term-line'; cur.style.opacity = 1;
+    cur.innerHTML = '<span class="prompt">$</span> <span class="cursor-blink"></span>';
+    term.appendChild(cur);
+    term.scrollTop = term.scrollHeight;
     return;
   }
-  const e = entries[i];
-  const line = document.createElement('div');
-  line.className = 'line';
-  line.innerHTML = `<span class="ts">[${e.ts}]</span> <span class="lvl">${e.lvl}</span>  ${colorize(e.msg)}`;
-  log.appendChild(line);
-  i++;
-  setTimeout(typeNext, 260);
+  const l = termLines[ti];
+  const div = document.createElement('div');
+  div.className = 'term-line';
+  div.innerHTML = l.p ? `<span class="prompt">$</span> ${l.text}` : `&nbsp;&nbsp;${l.out}`;
+  term.appendChild(div);
+  term.scrollTop = term.scrollHeight;
+  ti++;
+  setTimeout(typeTerm, l.p ? 420 : 260);
 }
-typeNext();
+setTimeout(typeTerm, 500);
 </script>
 
 </body>
