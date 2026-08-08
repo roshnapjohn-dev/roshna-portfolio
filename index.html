@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roshna P John — PHP / Symfony Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1520;
+    --panel:#101E30;
+    --panel2:#0D1A28;
+    --line:#213A54;
+    --blue:#6FB3F0;
+    --blue-dim:#3E6E96;
+    --amber:#E3A548;
+    --green:#7FC29B;
+    --text:#E7EDF3;
+    --muted:#8AA0B8;
+    --muted2:#5D7690;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--bg),var(--bg)),
+      repeating-linear-gradient(0deg, rgba(111,179,240,0.045) 0px, rgba(111,179,240,0.045) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(111,179,240,0.045) 0px, rgba(111,179,240,0.045) 1px, transparent 1px, transparent 40px);
+    background-blend-mode:normal;
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:var(--blue); text-decoration:none;}
+
+  /* corner-bracket panel */
+  .panel{
+    position:relative;
+    background:linear-gradient(180deg, var(--panel), var(--panel2));
+    border:1px solid var(--line);
+    padding:32px;
+  }
+  .panel::before,.panel::after,.panel .c-tl,.panel .c-br{
+    content:''; position:absolute; width:14px; height:14px;
+    border-color:var(--blue-dim); border-style:solid; opacity:0.9;
+  }
+  .panel::before{ top:-1px; left:-1px; border-width:2px 0 0 2px; }
+  .panel::after{ bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
+
+  /* ---------- HEADER / NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,21,32,0.88); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .brand{font-family:'Space Grotesk'; font-weight:700; font-size:16px; letter-spacing:0.02em;}
+  .brand span{color:var(--blue);}
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--muted);}
+  .navlinks a{color:var(--muted); font-family:'IBM Plex Mono'; font-size:12.5px; letter-spacing:0.03em; text-transform:uppercase;}
+  .navlinks a:hover{color:var(--blue);}
+  .status-pill{
+    display:flex; align-items:center; gap:6px;
+    font-family:'IBM Plex Mono'; font-size:11px; color:var(--green);
+    border:1px solid rgba(127,194,155,0.35); background:rgba(127,194,155,0.08);
+    padding:4px 10px; border-radius:2px; letter-spacing:0.03em;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--green); box-shadow:0 0 6px var(--green);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:72px 0 56px;}
+  .eyebrow{font-family:'IBM Plex Mono'; font-size:12px; color:var(--blue); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;}
+  .hero h1{font-size:44px; line-height:1.12; margin-bottom:14px;}
+  .hero h1 em{font-style:normal; color:var(--blue);}
+  .hero .role{font-size:17px; color:var(--muted); max-width:640px; margin-bottom:26px;}
+  .metarow{display:flex; flex-wrap:wrap; gap:10px 22px; font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--muted2); margin-bottom:30px;}
+  .metarow b{color:var(--text); font-weight:500;}
+  .cta-row{display:flex; flex-wrap:wrap; gap:12px;}
+  .btn{
+    font-family:'IBM Plex Mono'; font-size:13px; padding:11px 20px;
+    border:1px solid var(--blue-dim); color:var(--text); letter-spacing:0.02em;
+    display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
+  }
+  .btn.primary{background:var(--blue); color:#0A1520; border-color:var(--blue); font-weight:600;}
+  .btn.primary:hover{background:#8ec2f5;}
+  .btn:not(.primary):hover{border-color:var(--blue); color:var(--blue);}
+
+  /* ---------- LOG FEED (signature element) ---------- */
+  .logfeed{margin-top:44px;}
+  .logfeed .head{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--muted2);
+    padding-bottom:10px; margin-bottom:14px; border-bottom:1px dashed var(--line);
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+  #log{font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--muted); min-height:210px;}
+  #log .line{white-space:pre-wrap; opacity:0; animation:appear .25s forwards;}
+  #log .ts{color:var(--muted2);}
+  #log .lvl{color:var(--green); font-weight:600;}
+  #log .k{color:var(--blue);}
+  #log .cursor{display:inline-block; width:7px; height:14px; background:var(--blue); vertical-align:-2px; animation:blink 1s step-end infinite;}
+  @keyframes appear{to{opacity:1;}}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:30px;}
+  .sec-num{font-family:'IBM Plex Mono'; color:var(--blue-dim); font-size:13px;}
+  .sec-head h2{font-size:26px;}
+  .sec-line{flex:1; height:1px; background:var(--line);}
+
+  /* ---------- SKILLS ---------- */
+  .skillgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  .skillcat{padding:20px;}
+  .skillcat h3{font-size:13px; font-family:'IBM Plex Mono'; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--muted); border:1px solid var(--line); padding:4px 9px; border-radius:2px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp{position:relative; padding-left:28px; border-left:1px solid var(--line);}
+  .exp-item{position:relative; padding-bottom:44px;}
+  .exp-item:last-child{padding-bottom:0;}
+  .exp-item::before{
+    content:''; position:absolute; left:-33px; top:4px; width:9px; height:9px;
+    background:var(--bg); border:2px solid var(--blue); border-radius:50%;
+  }
+  .exp-item .role-row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; margin-bottom:4px;}
+  .exp-item h3{font-size:18px;}
+  .exp-item .dates{font-family:'IBM Plex Mono'; font-size:12px; color:var(--blue); white-space:nowrap;}
+  .exp-item .company{color:var(--muted); font-size:14px; margin-bottom:12px;}
+  .exp-item ul{padding-left:18px; color:var(--muted); font-size:14.5px;}
+  .exp-item li{margin-bottom:7px;}
+  .exp-item li::marker{color:var(--blue-dim);}
+
+  /* ---------- PROJECTS ---------- */
+  .projgrid{display:grid; grid-template-columns:1fr; gap:18px;}
+  .proj{padding:24px;}
+  .proj .tag{font-family:'IBM Plex Mono'; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;}
+  .proj h3{font-size:18px; margin-bottom:10px;}
+  .proj p{color:var(--muted); font-size:14.5px;}
+  .proj.featured{border-color:var(--blue-dim); background:linear-gradient(180deg, #12233A, #0D1A28);}
+
+  /* ---------- EDUCATION / LANG ---------- */
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .infoblock{padding:22px;}
+  .infoblock h3{font-size:13px; font-family:'IBM Plex Mono'; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;}
+  .infoblock p{font-size:14.5px; color:var(--muted); margin-bottom:8px;}
+  .infoblock p b{color:var(--text); font-weight:500;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line); padding:40px 0; text-align:center;}
+  footer .mono{color:var(--muted2); font-size:12px;}
+  footer a{color:var(--blue);}
+
+  @media(max-width:720px){
+    .hero h1{font-size:32px;}
+    .skillgrid{grid-template-columns:1fr;}
+    .twocol{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand">ROSHNA<span>.</span>PJ</div>
+      <div class="navlinks">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="status-pill"><span class="dot"></span>OPEN_TO_RELOCATE :: DUBAI</div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">// backend_systems.engineer</div>
+    <h1>Roshna P John builds <em>the infrastructure</em><br>governments and startups run on.</h1>
+    <p class="role">PHP / Symfony full-stack developer — secure APIs, real-time systems and scalable backends. 3.8+ years shipping production systems, from a state-level government budget platform to 100+ startup builds.</p>
+    <div class="metarow">
+      <span><b>Based:</b> Trivandrum, Kerala, IN</span>
+      <span><b>Nationality:</b> Indian</span>
+      <span><b>Notice period:</b> 10 days</span>
+      <span><b>Visa:</b> Requires employment visa</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn primary" href="mailto:roshnapjputhenveettil@gmail.com">mail --to roshna</a>
+      <a class="btn" href="https://linkedin.com/in/roshnapjohn" target="_blank">linkedin.com/in/roshnapjohn</a>
+      <a class="btn" href="tel:+919061944240">+91 90619 44240</a>
+    </div>
+
+    <!-- SIGNATURE: audit log feed -->
+    <div class="logfeed panel">
+      <div class="c-tl"></div>
+      <div class="head"><span>career_audit.log</span><span>tail -f</span></div>
+      <div id="log"></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Experience</h2><div class="sec-line"></div></div>
+    <div class="exp">
+      <div class="exp-item">
+        <div class="role-row"><h3>PHP Developer — National Informatics Centre (NIC), Trivandrum</h3><span class="dates">Sep 2025 – Present</span></div>
+        <div class="company">Government of India's premier IT organization — mission-critical digital infrastructure for central and state departments.</div>
+        <ul>
+          <li>Part of a 7-member team rebuilding the Kerala Budget Estimation & Allocation System (BEST) on Symfony 6.4, migrating off a legacy platform with zero loss of existing capability.</li>
+          <li>Led legacy-to-new data migration with validation and reconciliation for full integrity.</li>
+          <li>Built RBAC across 10+ user profiles (Maker, Verifier, Approver, department seats) with audit-ready logging.</li>
+          <li>Improved DB performance via schema modeling and query tuning — cut slow queries ~40% on large datasets.</li>
+          <li>Used Claude and the ChatGPT API for architecture planning, code review, and documentation.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="role-row"><h3>PHP Full Stack Developer — LiveAs Technologies, Bengaluru</h3><span class="dates">Nov 2022 – Sep 2025</span></div>
+        <div class="company">Bengaluru-based software services firm — SaaS, e-commerce, websites, client portals.</div>
+        <ul>
+          <li>Owned full project lifecycle — client calls through go-live — across 3–5 concurrent projects, ~90% on-schedule delivery.</li>
+          <li>Delivered 100+ production web applications end-to-end.</li>
+          <li>Built a real-time chat & A/V system (SSE + WebRTC) for 50+ concurrent users with file sharing and read states.</li>
+          <li>Designed secure auth — OTP, IP-based access, audit logging — across multi-role SaaS apps.</li>
+          <li>Automated internal workflows via ChatGPT API, cutting repetitive dev effort ~55%.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Key Projects</h2><div class="sec-line"></div></div>
+    <div class="projgrid">
+      <div class="proj panel featured">
+        <div class="c-tl"></div>
+        <div class="tag">Currently building · NIC</div>
+        <h3>Kerala Budget Estimation & Allocation System (BEST)</h3>
+        <p>A 12-step Financial Year Reinitialization module — re-architected from scattered AJAX calls into a single streamed NDJSON endpoint for live progress — safely resetting 30+ transactional tables at fiscal year-end with fail-safe rollback. Plus a multi-role permission system, a <span class="mono">getMultiRowWorkflowState()</span> engine for file-level verify/sendback/approve actions, and an audit logging system that traces every DB operation to root cause in minutes.</p>
+      </div>
+      <div class="proj panel">
+        <div class="c-tl"></div>
+        <div class="tag">LiveAs Technologies</div>
+        <h3>IntraLive — multi-branch news streaming platform</h3>
+        <p>A priority-based display engine for organization-wide news broadcast — permanent items, timed temporary items, and a flash-news override that pins alerts to a live ticker.</p>
+      </div>
+      <div class="proj panel">
+        <div class="c-tl"></div>
+        <div class="tag">LiveAs Technologies</div>
+        <h3>DCIM — team & customer interaction module</h3>
+        <p>A project-linked group chat connecting client, sales, manager, and developer in one thread, with per-phase chat access control — built to close a recurring miscommunication gap.</p>
+      </div>
+      <div class="proj panel">
+        <div class="c-tl"></div>
+        <div class="tag">LiveAs Technologies</div>
+        <h3>LynkUp — internal video calling & screen sharing</h3>
+        <p>A Skype-like internal platform for video calls, screen sharing, chat, and multi-user meetings.</p>
+      </div>
+      <div class="proj panel">
+        <div class="c-tl"></div>
+        <div class="tag">LiveAs Technologies</div>
+        <h3>Propels — proposal-generation tool</h3>
+        <p>A drag-and-drop template system for the sales team to assemble reusable requirement blocks into styled proposals, with one-click email delivery.</p>
+      </div>
+      <div class="proj panel">
+        <div class="c-tl"></div>
+        <div class="tag">LiveAs Technologies</div>
+        <h3>DevPro — time & progress tracking</h3>
+        <p>Role-based start/pause/end task timers rolling up into manager and developer dashboards.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Core Technical Skills</h2><div class="sec-line"></div></div>
+    <div class="skillgrid">
+      <div class="skillcat panel"><div class="c-tl"></div><h3>Backend</h3>
+        <div class="chips">
+          <span class="chip">PHP 8.x</span><span class="chip">Symfony</span><span class="chip">Doctrine ORM</span>
+          <span class="chip">Laravel (in progress)</span><span class="chip">REST APIs</span><span class="chip">MVC</span>
+          <span class="chip">Microservices</span><span class="chip">Cron Jobs</span>
+        </div>
+      </div>
+      <div class="skillcat panel"><div class="c-tl"></div><h3>Data</h3>
+        <div class="chips">
+          <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Schema Design</span>
+          <span class="chip">Indexing</span><span class="chip">Query Optimization</span>
+        </div>
+      </div>
+      <div class="skillcat panel"><div class="c-tl"></div><h3>Real-Time & Security</h3>
+        <div class="chips">
+          <span class="chip">SSE</span><span class="chip">WebRTC</span><span class="chip">RBAC</span>
+          <span class="chip">Session Mgmt</span><span class="chip">OTP / Email Verify</span><span class="chip">Audit Logging</span>
+        </div>
+      </div>
+      <div class="skillcat panel"><div class="c-tl"></div><h3>Frontend & Tools</h3>
+        <div class="chips">
+          <span class="chip">JS (ES6+)</span><span class="chip">Tailwind</span><span class="chip">Bootstrap</span>
+          <span class="chip">Twig</span><span class="chip">AJAX</span><span class="chip">Figma</span>
+          <span class="chip">Git / GitHub / GitLab</span><span class="chip">Claude & ChatGPT API</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Education & Languages</h2><div class="sec-line"></div></div>
+    <div class="twocol">
+      <div class="infoblock panel"><div class="c-tl"></div>
+        <h3>Education & Awards</h3>
+        <p><b>B.Tech, CSE</b> — Rajiv Gandhi Institute of Technology (Govt.), Kottayam</p>
+        <p><b>Performance Excellence Award</b> — LiveAs Technologies, 2023</p>
+        <p><b>Database Management Systems</b> — NPTEL, IIT Kharagpur (Certified)</p>
+      </div>
+      <div class="infoblock panel"><div class="c-tl"></div>
+        <h3>Languages</h3>
+        <p><b>English</b> — Professional working proficiency</p>
+        <p><b>Malayalam</b> — Native</p>
+        <p><b>Hindi</b> — Basic</p>
+        <p><b>Tamil</b> — Basic</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <p class="mono">roshnapjputhenveettil@gmail.com · +91 90619 44240 · <a href="https://linkedin.com/in/roshnapjohn" target="_blank">linkedin.com/in/roshnapjohn</a></p>
+    <p class="mono" style="margin-top:8px;">Trivandrum, Kerala · Open to relocation — Dubai, UAE</p>
+  </div>
+</footer>
+
+<script>
+const entries = [
+  {ts:"2022-11-01", lvl:"INFO", msg:"career.start company=LiveAs_Technologies role=Full_Stack_Developer"},
+  {ts:"2023-08-14", lvl:"INFO", msg:"award.granted name=Performance_Excellence_Award scope=high_priority_projects"},
+  {ts:"2025-06-30", lvl:"INFO", msg:"delivery.summary apps_shipped=100+ on_schedule=~90%"},
+  {ts:"2025-09-01", lvl:"INFO", msg:"career.transition company=NIC role=PHP_Developer status=current"},
+  {ts:"2025-09-01", lvl:"INFO", msg:"migration.legacy_to_symfony tables=30+ integrity_check=PASS"},
+  {ts:"2025-11-12", lvl:"INFO", msg:"rbac.deployed roles=10+ scope=maker,verifier,approver"},
+  {ts:"2025-12-03", lvl:"INFO", msg:"query.optimization slow_queries_reduced=40% dataset=large"},
+  {ts:"2026-02-18", lvl:"INFO", msg:"reinit_module.deployed steps=12 tables_reset=30+ rollback=safe"},
+];
+
+const log = document.getElementById('log');
+let i = 0;
+
+function colorize(msg){
+  return msg.replace(/([a-z_]+)=([^\s]+)/g, '<span class="k">$1</span>=$2');
+}
+
+function typeNext(){
+  if(i >= entries.length){
+    const cur = document.createElement('div');
+    cur.className = 'line';
+    cur.style.opacity = 1;
+    cur.innerHTML = '<span class="cursor"></span>';
+    log.appendChild(cur);
+    return;
+  }
+  const e = entries[i];
+  const line = document.createElement('div');
+  line.className = 'line';
+  line.innerHTML = `<span class="ts">[${e.ts}]</span> <span class="lvl">${e.lvl}</span>  ${colorize(e.msg)}`;
+  log.appendChild(line);
+  i++;
+  setTimeout(typeNext, 260);
+}
+typeNext();
+</script>
+
+</body>
+</html>
